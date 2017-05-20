@@ -4,14 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ICImagingControlWPF1"
-             xmlns:ImagingSource="clr-namespace:TIS.Imaging;assembly=TIS.Imaging.ICImagingControl34"
-             
+             xmlns:ImagingSource="clr-namespace:TIS.Imaging;assembly=TIS.Imaging.ICImagingControl34"             
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <WindowsFormsHost>
-            <ImagingSource:ICImagingControl x:Name="iCImagingControl"></ImagingSource:ICImagingControl>
-        </WindowsFormsHost>
+        <Grid>
+            <WindowsFormsHost>
+                <ImagingSource:ICImagingControl x:Name="iCImagingControl"></ImagingSource:ICImagingControl>
+            </WindowsFormsHost>
+        </Grid>
+   
     </Grid>
 
 </UserControl>

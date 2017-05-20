@@ -12,18 +12,35 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
 
 namespace ICImagingControlWPF1
 {
     /// <summary>
     /// ICImagingControlWFM.xaml 的交互逻辑
     /// </summary>
+    delegate void DeviceLostRouteEventHandler(object sender, DeviceLostEventArgs e);
+    public class DeviceLostEventArgs : RoutedEventArgs
+    {
+        public DeviceLostEventArgs(RoutedEvent routedEvent, object source) : base(routedEvent, source) { }
+        
+    }
     public partial class ICImagingControlWFM : UserControl
     {
         public ICImagingControlWFM()
         {
             InitializeComponent();
+            this.iCImagingControl.DeviceLost += ICImagingControl_DeviceLost;
         }
+
+        private void ICImagingControl_DeviceLost(object sender, TIS.Imaging.ICImagingControl.DeviceLostEventArgs e)
+        {
+            //throw new NotImplementedException();
+            
+            DeviceLostEventArgs args = new DeviceLostEventArgs(DeviceLostEvent, this);
+            this.RaiseEvent(args);
+        }
+
         /// <summary>
         /// 控件初始化，选择相机
         /// </summary>
@@ -36,6 +53,7 @@ namespace ICImagingControlWPF1
             myICImagingControlWFM.iCImagingControl.ShowDeviceSettingsDialog();
             if (myICImagingControlWFM.iCImagingControl.DeviceValid)
             {
+                myICImagingControlWFM.iCImagingControl.Size = new System.Drawing.Size(600, 600);
                 myICImagingControlWFM.iCImagingControl.LiveDisplayDefault = false;
                 myICImagingControlWFM.iCImagingControl.LiveDisplayHeight = myICImagingControlWFM.iCImagingControl.Height;
                 myICImagingControlWFM.iCImagingControl.LiveDisplayWidth = myICImagingControlWFM.iCImagingControl.Width;
@@ -76,5 +94,22 @@ namespace ICImagingControlWPF1
             get { return (bool)GetValue(LiveStopProperty); }
             set { SetValue(LiveStopProperty, value); }
         }
+
+        //1、为元素声明并注册事件
+        public static readonly RoutedEvent DeviceLostEvent = EventManager.RegisterRoutedEvent("DeviceLost", RoutingStrategy.Bubble,
+                                                             typeof(DeviceLostRouteEventHandler), typeof(ICImagingControlWFM));
+
+        //2、包装事件
+        public event RoutedEventHandler DeviceLost
+        {
+            add { this.AddHandler(DeviceLostEvent, value); }
+            remove { this.RemoveHandler(DeviceLostEvent, value); }
+        }
+        //3、创建激发事件的方法
+        //protected void onDeviceLost()
+        //{            
+        //    DeviceLostEventArgs args = new DeviceLostEventArgs(DeviceLostEvent, this);            
+        //    this.RaiseEvent(args);
+        //}
     }
 }
