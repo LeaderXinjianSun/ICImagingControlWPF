@@ -8,11 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Grid>
-            <WindowsFormsHost>
-                <ImagingSource:ICImagingControl x:Name="iCImagingControl"></ImagingSource:ICImagingControl>
-            </WindowsFormsHost>
-        </Grid>
+
+
+        <WindowsFormsHost>
+            <ImagingSource:ICImagingControl x:Name="iCImagingControl"></ImagingSource:ICImagingControl>
+        </WindowsFormsHost>
+           
+            
+        
    
     </Grid>
 

@@ -53,7 +53,7 @@ namespace ICImagingControlWPF1
             myICImagingControlWFM.iCImagingControl.ShowDeviceSettingsDialog();
             if (myICImagingControlWFM.iCImagingControl.DeviceValid)
             {
-                myICImagingControlWFM.iCImagingControl.Size = new System.Drawing.Size(600, 600);
+                myICImagingControlWFM.iCImagingControl.Size = new System.Drawing.Size(320, 240);
                 myICImagingControlWFM.iCImagingControl.LiveDisplayDefault = false;
                 myICImagingControlWFM.iCImagingControl.LiveDisplayHeight = myICImagingControlWFM.iCImagingControl.Height;
                 myICImagingControlWFM.iCImagingControl.LiveDisplayWidth = myICImagingControlWFM.iCImagingControl.Width;
@@ -104,6 +104,30 @@ namespace ICImagingControlWPF1
         {
             add { this.AddHandler(DeviceLostEvent, value); }
             remove { this.RemoveHandler(DeviceLostEvent, value); }
+        }
+
+        public static readonly DependencyProperty ImageActiveBuffer1Property =
+        DependencyProperty.Register("ImageActiveBuffer1", typeof(Bitmap), typeof(ICImagingControlWFM));
+        //iCImagingControl.ImageActiveBuffer.Bitmap;
+        public Bitmap ImageActiveBuffer1
+        {
+            get { return (Bitmap)GetValue(ImageActiveBuffer1Property); }
+            set { SetValue(ImageActiveBuffer1Property, value); }
+        }
+        public static readonly DependencyProperty SnapActionProperty =
+    DependencyProperty.Register("SnapAction", typeof(bool), typeof(ICImagingControlWFM), new PropertyMetadata(
+    new PropertyChangedCallback((d, e) =>
+    {
+        var myICImagingControlWFM = d as ICImagingControlWFM;
+        
+            myICImagingControlWFM.iCImagingControl.MemorySnapImage();
+        
+
+    })));
+        public bool SnapAction
+        {
+            get { return (bool)GetValue(SnapActionProperty); }
+            set { SetValue(SnapActionProperty, value); }
         }
         //3、创建激发事件的方法
         //protected void onDeviceLost()
